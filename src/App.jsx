@@ -6,8 +6,8 @@ import './App.css'
 const App = () => {
   const [team, setTeam] = useState([])
   const [money, setMoney] = useState(100)
-  const [fighters, setFighters] = useState([])
-  const zombieFighters = [
+  const [fighters, setFighters] = useState(localStorage.getItem('team'))
+  const [zombieFighters, setZombieFighters] = useState([
   {
     id: 1,
     name: 'Survivor',
@@ -88,22 +88,49 @@ const App = () => {
     agility: 6,
     img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/e41f26.png',
   },
-]
+])
+
+const removeAdded = (id) => {
+  const updatedFighters = zombieFighters.filter(z => z.id !== id)
+  setZombieFighters(updatedFighters)
+}
+
+const handleAddFighter = (target) => {
+  {money >= target.price ? (
+  setTeam(prevTeam => [...prevTeam, target]),
+  removeAdded(target.id),
+  setMoney(money - target.price)
+  ) : console.log("Not enough Money")}
+}
 
   return (
     <>
     <div>
       <h2>{money}</h2>
+      {team[0] ? 
+      <>
+      <h3>TEAM</h3>
+      <div style={{border: '1px solid white'}}>
+        {team.map((f) => (
+          <ul>
+          <img src={f.img} alt="" />
+          <li>{f.name}</li>
+          <li>Strength: {f.strength}</li>
+          <li>Agility: {f.agility}</li>
+          </ul>
+        ))}
+      </div>
+      </>:<></>}
     </div>
     <div>
       {zombieFighters.map((z) => (
-        <ul>
+        <ul key={z.name}>
           <img src={z.img} alt="" />
           <li>{z.name}</li>
-          <li>{z.price}</li>
-          <li>{z.strength}</li>
-          <li>{z.agility}</li>
-          <button>ADD</button>
+          <li>Price: {z.price}</li>
+          <li>Strength: {z.strength}</li>
+          <li>Agility: {z.agility}</li>
+          <button onClick={() => handleAddFighter(z) }>ADD</button>
         </ul>
       ))}
     </div>
