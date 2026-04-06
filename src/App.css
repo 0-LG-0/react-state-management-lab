@@ -3,16 +3,12 @@
 }
 
 ul {
-  display: inline-flex;
-  flex-direction: column;
+  display: block;
   text-align: left;
-  width: fit-content;
-  /*flex-wrap: ;*/
   border: 1px solid white;
   padding: 0;
   border-radius: 15px;
-  margin-right: 5px;
-
+  margin: 10px;
 }
 
 button {
@@ -21,6 +17,12 @@ border-radius: 8px;
 background-color: silver;
 color: black;
 font-weight: bold;
+width: 100%
+}
+
+button:active {
+  background-color: gray;
+  border: 3px groove silver;
 }
 
 img {
@@ -33,3 +35,33 @@ li {
   padding: 8px;
   
 }
+
+.zfighterDiv {
+  display: flex;
+  border: 10px ridge rgb(4, 217, 255);
+  overflow-x: scroll;
+}
+
+.zfighterDiv::-webkit-scrollbar {
+  display: scroll;
+}
+
+.teamDiv {
+  display: flex;
+  /*border: 10px ridge slategray;*/
+  overflow-x: scroll;
+  margin: 0px;
+  margin-bottom: 20px;
+}
+
+.teamDiv::-webkit-scrollbar {
+  display: scroll;
+}
+
+/*
+.redButton {
+visibility: hidden;}
+
+.greenButton {
+  visibility: visible;
+}*/

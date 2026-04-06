@@ -6,7 +6,6 @@ import './App.css'
 const App = () => {
   const [team, setTeam] = useState([])
   const [money, setMoney] = useState(100)
-  const [fighters, setFighters] = useState(localStorage.getItem('team'))
   const [zombieFighters, setZombieFighters] = useState([
   {
     id: 1,
@@ -90,6 +89,9 @@ const App = () => {
   },
 ])
 
+const strengths = team.map(fighter => fighter.strength)
+const totalStrength = strengths.reduce((acc, current) => acc + current, 0)
+
 const removeAdded = (id) => {
   const updatedFighters = zombieFighters.filter(z => z.id !== id)
   setZombieFighters(updatedFighters)
@@ -106,23 +108,34 @@ const handleAddFighter = (target) => {
   return (
     <>
     <div>
-      <h2>{money}</h2>
-      {team[0] ? 
+      <h2>Money: {money}</h2>
+      
+      <h2>Team Strength: {totalStrength}</h2>
+      <h2></h2>
+
+      {team.length === 0 ? 
+      <h1>Pick some team members!</h1>:
       <>
       <h3>TEAM</h3>
-      <div style={{border: '1px solid white'}}>
+      <div className="teamDiv">
+
         {team.map((f) => (
+          <div style={{width: "fit-content"}} key={f.name}>
           <ul>
           <img src={f.img} alt="" />
           <li>{f.name}</li>
           <li>Strength: {f.strength}</li>
           <li>Agility: {f.agility}</li>
           </ul>
+          </div>
         ))}
+
       </div>
-      </>:<></>}
+      </>}
+
     </div>
-    <div>
+    <div className="zfighterDiv">
+
       {zombieFighters.map((z) => (
         <ul key={z.name}>
           <img src={z.img} alt="" />
@@ -130,9 +143,10 @@ const handleAddFighter = (target) => {
           <li>Price: {z.price}</li>
           <li>Strength: {z.strength}</li>
           <li>Agility: {z.agility}</li>
-          <button onClick={() => handleAddFighter(z) }>ADD</button>
+          <button  onClick={() => handleAddFighter(z) } className={money >= z.price ? "greenButton":"redButton"}><strong>{money >= z.price ? "ADD":"Insufficient Funds"}</strong></button>
         </ul>
       ))}
+
     </div>
     </>
   );
