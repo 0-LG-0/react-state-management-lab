@@ -91,6 +91,8 @@ const App = () => {
 
 const strengths = team.map(fighter => fighter.strength)
 const totalStrength = strengths.reduce((acc, current) => acc + current, 0)
+const agilities = team.map(fighter => fighter.agility)
+const totalAgility = agilities.reduce((acc, current) => acc + current, 0)
 
 const removeAdded = (id) => {
   const updatedFighters = zombieFighters.filter(z => z.id !== id)
@@ -102,48 +104,61 @@ const handleAddFighter = (target) => {
   setTeam(prevTeam => [...prevTeam, target]),
   removeAdded(target.id),
   setMoney(money - target.price)
-  ) : console.log("Not enough Money")}
+  ) : setMessage('Insufficient Funds')}
+}
+
+const handleRemoveFighter = (target) => {
+  const updatedTeam = team.filter(f => f.id !== target.id)
+  setTeam(updatedTeam)
+  setZombieFighters(prevFighters => [...prevFighters, target])
+  setMoney(money + target.price)
 }
 
   return (
     <>
     <div>
+      <h1>Zombie Fighters</h1>
       <h2>Money: {money}</h2>
       
       <h2>Team Strength: {totalStrength}</h2>
-      <h2></h2>
-
+      <h2>Team Agility: {totalAgility}</h2>
+      <h2 style={{margin: 'auto auto'}}>TEAM</h2>
       {team.length === 0 ? 
-      <h1>Pick some team members!</h1>:
+      <p>Pick some team members</p>:
       <>
-      <h3>TEAM</h3>
+      <div className="teamView">
+      
       <div className="teamDiv">
 
         {team.map((f) => (
-          <div style={{width: "fit-content"}} key={f.name}>
-          <ul>
-          <img src={f.img} alt="" />
+          <ul key={f.id}>
+          <img src={f.img} alt="placeholder" />
           <li>{f.name}</li>
           <li>Strength: {f.strength}</li>
           <li>Agility: {f.agility}</li>
+          <li>Price: {f.price}</li>
+          <button onClick={() => handleRemoveFighter(f) }>REMOVE</button>
           </ul>
-          </div>
         ))}
 
+      </div>
       </div>
       </>}
 
     </div>
+    <h2>Fighters</h2>
     <div className="zfighterDiv">
 
       {zombieFighters.map((z) => (
-        <ul key={z.name}>
-          <img src={z.img} alt="" />
+        <ul key={z.id}>
+          <img src={z.img} alt="placeholder" />
           <li>{z.name}</li>
-          <li>Price: {z.price}</li>
           <li>Strength: {z.strength}</li>
           <li>Agility: {z.agility}</li>
-          <button  onClick={() => handleAddFighter(z) } className={money >= z.price ? "greenButton":"redButton"}><strong>{money >= z.price ? "ADD":"Insufficient Funds"}</strong></button>
+          <li>Price: {z.price}</li>
+          <button  onClick={() => handleAddFighter(z) }>
+          <strong>{money >= z.price ? "ADD":"Insufficient Funds"}</strong>
+          </button>
         </ul>
       ))}
 

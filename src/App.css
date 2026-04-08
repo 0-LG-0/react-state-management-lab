@@ -38,7 +38,6 @@ li {
 
 .zfighterDiv {
   display: flex;
-  border: 10px ridge rgb(4, 217, 255);
   overflow-x: scroll;
 }
 
@@ -48,7 +47,6 @@ li {
 
 .teamDiv {
   display: flex;
-  /*border: 10px ridge slategray;*/
   overflow-x: scroll;
   margin: 0px;
   margin-bottom: 20px;
@@ -58,10 +56,6 @@ li {
   display: scroll;
 }
 
-/*
-.redButton {
-visibility: hidden;}
-
-.greenButton {
-  visibility: visible;
-}*/
+.teamView {
+  padding-top: 20px;
+}
